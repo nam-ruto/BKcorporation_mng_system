@@ -1,5 +1,7 @@
-#BKcorporation
-##A. PROBLEM
+hi
+hello
+# BKcorporation
+## A. PROBLEM
 Programming an “Employee Management System” of a corporation – “BKCorporation”.
 The organizational structure of the company is hierarchical as follows: 
 - Corporation
@@ -15,8 +17,8 @@ The organizational structure of the company is hierarchical as follows:
 - Option 5: Add a new employee.
 - Option 6: Update Employee’s information.
 - Option 7: Exit program.
-##B. SOLUTION and WORK DIVISION
-###I. Overview
+## B. SOLUTION and WORK DIVISION
+### I. Overview
 _What knowledge will be applied in this project?_
 1. Structure organization: struct
 2. Data base: text file – read file
