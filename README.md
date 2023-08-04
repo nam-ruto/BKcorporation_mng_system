@@ -18,12 +18,12 @@ The organizational structure of the company is hierarchical as follows:
 ## B. SOLUTION and WORK DIVISION
 ### I. Overview
 _What knowledge will be applied in this project?_ <br />
-1. Structure organization: struct
-2. Data base: text file – read file
+1. Structure organization: struct <br />
+2. Data base: text file – read file <br />
 _Why text file? Not other database system?_ <br />
 There are many types of databases can be used in this management project, such as MySQL, PostgreSQL, Oracle, … <br />
 However, because of the limitation of this course and for simplifying the problem, we will only use “read file” method to address this problem. <br />
-3. Data structure: vector (stl container)
+3. Data structure: vector (stl container) <br />
 _Why “vector, not others?_ <br />
 There are many types of data structures can be used like linked list, array, tree, vector, … <br />
 However, for simple we use vector which is a class template that contains the vector container, and its member functions allow us easily to manage the data.
