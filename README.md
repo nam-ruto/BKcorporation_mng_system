@@ -1,8 +1,6 @@
-hi
-hello
 # BKcorporation
-## A. PROBLEM
-Programming an “Employee Management System” of a corporation – “BKCorporation”.
+## A. PROBLEM\n
+Programming an “Employee Management System” of a corporation – “BKCorporation”.\n
 The organizational structure of the company is hierarchical as follows: 
 - Corporation
 - Subsidiaries
@@ -17,15 +15,15 @@ The organizational structure of the company is hierarchical as follows:
 - Option 5: Add a new employee.
 - Option 6: Update Employee’s information.
 - Option 7: Exit program.
-## B. SOLUTION and WORK DIVISION
-### I. Overview
-_What knowledge will be applied in this project?_
+## B. SOLUTION and WORK DIVISION\n
+### I. Overview\n
+_What knowledge will be applied in this project?_\n
 1. Structure organization: struct
 2. Data base: text file – read file
-_Why text file? Not other database system?_
-There are many types of databases can be used in this management project, such as MySQL, PostgreSQL, Oracle, … 
-However, because of the limitation of this course and for simplifying the problem, we will only use “read file” method to address this problem.
+_Why text file? Not other database system?_\n
+There are many types of databases can be used in this management project, such as MySQL, PostgreSQL, Oracle, … \n
+However, because of the limitation of this course and for simplifying the problem, we will only use “read file” method to address this problem.\n
 3. Data structure: vector (stl container)
-_Why “vector, not others?_
+_Why “vector, not others?_\n
 There are many types of data structures can be used like linked list, array, tree, vector, …
 However, for simple we use vector which is a class template that contains the vector container, and its member functions allow us easily to manage the data.
