@@ -211,7 +211,7 @@ minh246.bk@gmail.com
 6
 Nguyen Van
 Lan
-BKcorporation/BKchem/BKrobot
+BKcorporation/BKmechan/BKrobot
 Truong phong
 05/09/1997
 Ha Noi
@@ -420,7 +420,7 @@ hoang223.bk@gmail.com
 11
 Tran Thi
 Hang
-BKcorporation/BKchem/BKrobot
+BKcorporation/BKmechan/BKrobot
 08/01/1985
 Binh Duong
 No.75, Le Thanh Nghi
@@ -584,7 +584,7 @@ huy244.bk@gmail.com
 15
 Ho Van
 Thanh
-BKcorporation/BKchem/BKauto
+BKcorporation/BKmechan/BKauto
 20/06/1985
 Da Nang
 No.46, Hang Da
