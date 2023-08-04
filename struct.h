@@ -29,51 +29,58 @@ struct Employee
         this -> phone_number = phone_number;
         this -> start_of_work = start_of_work;   
     }
+
 };
 
 struct Department
 {
     string name;
-    string leader;
-    string vice_leader;
+    Employee leader;
+    Employee vice_leader;
     vector<Employee>employee;
     
     Department()
     {
         name = "Unappointed";
-        leader = "Unappointed";
-        vice_leader = "Unappointed";
+        leader.fam_name = "";
+        leader.first_name = "Unappointed";
+        vice_leader.fam_name = "";
+        vice_leader.first_name = "Unappointed";
     }
 };
 
 struct Subsidiary
 {
     string name;
-    string director;
-    string deputy_director;
+    Employee director;
+    Employee deputy_director;
     vector<Department>department;
     vector<Employee>employee;
 
     Subsidiary()
     {
         name = "Unappointed";
-        director = "Unappointed";
-        deputy_director = "Unappointed";
+        director.fam_name = "";
+        director.first_name = "Unappointed";
+        deputy_director.fam_name = "";
+        deputy_director.first_name = "Unappointed";
     }
 };
 
 struct Corporation
 {
     string name;
-    string chairman;
-    string vice_chairman;
+    Employee chairman;
+    Employee vice_chairman;
     vector<Subsidiary>subsidiary;
 
     Corporation()
     {
         name = "Unappointed";
-        chairman = "Unappointed";
-        vice_chairman = "Unappointed";
+        chairman.fam_name = "";
+        chairman.first_name = "Unappointed";
+        vice_chairman.fam_name = "";
+        vice_chairman.first_name = "Unappointed";
     }
 };
 

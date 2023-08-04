@@ -20,35 +20,36 @@ using namespace std;
 Corporation initCorp;
 void corp_devision(Employee person)
 {
-    if(person.position == "Chu tich")
+    bool is_chairman = ( person.position == "Chu tich" || person.position == "chu tich");
+    bool is_vice_chairman = (person.position ==  "Pho chu tich" || person.position == "pho chu tich");
+    
+    if(is_chairman)
     {
-        string full_name = person.fam_name + " " + person.first_name;
         initCorp.name = person.unit;
-        initCorp.chairman = full_name;
+        initCorp.chairman = person;
     }
     
-    else if (person.position == "Pho chu tich")
+    else if (is_vice_chairman)
     {
-        string full_name = person.fam_name + " " + person.first_name;
-        initCorp.vice_chairman = full_name;
+        initCorp.name = person.unit;
+        initCorp.vice_chairman = person;
     }
 }
 
 void sub_devision(Employee person)
 {
     bool found = false;
-    bool is_chairman = (person.position == "Giam doc" || person.position == "giam doc");
-    bool is_vice_chairman = (person.position == "Pho giam doc" || person.position == "pho giam doc");
+    bool is_director = (person.position == "Giam doc" || person.position == "giam doc");
+    bool is_vice_director = (person.position == "Pho giam doc" || person.position == "pho giam doc");
 
     for(int i = 0; i < initCorp.subsidiary.size(); i++)
     {
         if(person.unit == initCorp.subsidiary[i].name)
         {
-            string full_name = person.fam_name + " " + person.first_name;
-            if(is_chairman)
-                initCorp.subsidiary[i].director = full_name;
-            else if(is_vice_chairman)
-                initCorp.subsidiary[i].deputy_director = full_name;  
+            if(is_director)
+                initCorp.subsidiary[i].director = person;
+            else if(is_vice_director)
+                initCorp.subsidiary[i].deputy_director = person;  
             else
             {
                 initCorp.subsidiary[i].employee.push_back(person);
@@ -59,13 +60,12 @@ void sub_devision(Employee person)
 
     if(!found)
     {
-        string full_name = person.fam_name + " " + person.first_name;
         Subsidiary new_sub;
         new_sub.name = person.unit;
-        if(is_chairman)
-            new_sub.director = full_name;
-        else if(is_vice_chairman)
-            new_sub.deputy_director = full_name;
+        if(is_director)
+            new_sub.director = person;
+        else if(is_vice_director)
+            new_sub.deputy_director = person;
         else
             new_sub.employee.push_back(person); 
 
@@ -87,11 +87,10 @@ void depart_devision(Employee person)
             {
                 if(initCorp.subsidiary[i].department[j].name == person.unit)
                 {
-                    string full_name = person.fam_name + " " + person.first_name;
                     if(is_leader)
-                        initCorp.subsidiary[i].department[j].leader = full_name;
+                        initCorp.subsidiary[i].department[j].leader = person;
                     else if(is_vice_leader)
-                        initCorp.subsidiary[i].department[j].vice_leader = full_name; 
+                        initCorp.subsidiary[i].department[j].vice_leader = person; 
                     else
                         initCorp.subsidiary[i].department[j].employee.push_back(person);
                     found = true;
@@ -102,13 +101,12 @@ void depart_devision(Employee person)
 
             if(!found)
             {
-                string full_name = person.fam_name + " " + person.first_name;
                 Department new_depart;
                 new_depart.name = person.unit;
                 if(is_leader)
-                    new_depart.leader = full_name;
+                    new_depart.leader = person;
                 else if(is_vice_leader)
-                    new_depart.vice_leader = full_name; 
+                    new_depart.vice_leader = person; 
                 else
                     new_depart.employee.push_back(person);
                 initCorp.subsidiary[i].department.push_back(new_depart);
