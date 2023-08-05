@@ -141,59 +141,58 @@ int upload(vector<Employee>&manage_emp)
     {
         while(!input.eof())
         {
-            begining:
-                getline(input, id); getline(input, fam_name); getline(input, first_name);
-                getline(input, unit); getline(input, position); getline(input, dob);
-                getline(input, hometown); getline(input, address);getline(input, email); 
-                getline(input, phone_number);getline(input, working_start_date); 
+            getline(input, id); getline(input, fam_name); getline(input, first_name);
+            getline(input, unit); getline(input, position); getline(input, dob);
+            getline(input, hometown); getline(input, address);getline(input, email); 
+            getline(input, phone_number);getline(input, working_start_date); 
                 
-                // Xử lý chuỗi - unit
-                int slash = 0;
-                string parent_unit;
-                for(int i = 0; i < unit.size(); i++)
+            // Xử lý chuỗi - unit
+            int slash = 0;
+            string parent_unit;
+            for(int i = 0; i < unit.size(); i++)
+            {
+                if(unit[i] == '/')
                 {
-                    if(unit[i] == '/')
-                    {
-                        slash += 1;
-                        parent_unit = unit.substr(0, i);
-                        unit = unit.substr(i+1, unit.size());
-                        i = 0;
-                    }
+                    slash += 1;
+                    parent_unit = unit.substr(0, i);
+                    unit = unit.substr(i+1, unit.size());
+                    i = 0;
                 }
+            }
 
-                // Khởi tạo struct nhân viên, có các trường dữ liệu vừa nạp ở trên
-                Employee person(id, fam_name, first_name, unit, position, dob, hometown, address, email, phone_number, working_start_date);
+            // Khởi tạo struct nhân viên, có các trường dữ liệu vừa nạp ở trên
+            Employee person(id, fam_name, first_name, unit, position, dob, hometown, address, email, phone_number, working_start_date);
                 
-                // Lấy dữ liệu phần chấm công
-                string tmp;
-                getline(input, tmp);
-                while(tmp != "")
-                {
-                    person.date_time.push_back(tmp);
+            // Lấy dữ liệu phần chấm công
+            string tmp;
+            getline(input, tmp);
+            while(tmp != "")
+            {
+                person.date_time.push_back(tmp);
                     getline(input, tmp);
-                }
-                person.parent_unit = parent_unit;
+            }
+            person.parent_unit = parent_unit;
 
-                // Ném thằng này vào vecto manage_emp
-                manage_emp.push_back(person);
+            // Ném thằng này vào vecto manage_emp
+            manage_emp.push_back(person);
 
-                // Phân bổ thằng này vào vị trí Corp
-                if(slash == 0)
-                {
-                    corp_devision(person);
-                }
+            // Phân bổ thằng này vào vị trí Corp
+            if(slash == 0)
+            {
+                corp_devision(person);
+            }
 
-                // Phân bổ thằng này vào vị trí Subsidiary
-                else if(slash == 1)
-                {
-                    sub_devision(person);
-                }
+            // Phân bổ thằng này vào vị trí Subsidiary
+            else if(slash == 1)
+            {
+                sub_devision(person);
+            }
 
-                // Phân bổ thằng này vào vị trí Department
-                else if(slash == 2)
-                {
-                    depart_devision(person);
-                }
+            // Phân bổ thằng này vào vị trí Department
+            else if(slash == 2)
+            {
+                depart_devision(person);
+            }
 
         }
     }
