@@ -123,7 +123,7 @@ void depart_devision(Employee person)
     }
 }
 
-int upload(vector<Employee>&manage_emp)
+bool upload(vector<Employee>&manage_emp)
 {
     string  id, fam_name, first_name, unit, position, dob, hometown, 
             address, email, phone_number, working_start_date;
@@ -134,7 +134,7 @@ int upload(vector<Employee>&manage_emp)
     if(!input.is_open())
     {
         cout << "FILE ERROR. Can not access, please try again!\n";
-        return 0;
+        return false;
     }
 
     else
@@ -193,10 +193,10 @@ int upload(vector<Employee>&manage_emp)
             {
                 depart_devision(person);
             }
-
         }
     }
     input.close();
+    return true;
 }
 
 // Module 2
@@ -212,12 +212,12 @@ int main()
     vector<Employee>manage;
 
     // Tải thông tin từ file text lên, nếu không tải được thì dừng chương trình
-    if(upload(manage))
+    if(upload(manage) == true)
     {
         // Menu-base
         //..........
 
     }
-
+    
     return 0;
 }
