@@ -3,7 +3,6 @@
 #include <vector> // Lưu trữ dữ liệu
 #include <fstream> // Đọc file
 #include <iomanip> // Thiết lập định dạng
-#include <cctype>   
 #include "struct.h" // File header chứa struct
 
 // Bộ tiền xử lý này để xóa màn hình console
@@ -42,17 +41,17 @@ void sub_devision(Employee person)
     bool is_director = (person.position == "Giam doc" || person.position == "giam doc");
     bool is_vice_director = (person.position == "Pho giam doc" || person.position == "pho giam doc");
 
-    for(int i = 0; i < initCorp.subsidiary.size(); i++)
+    for(int i = 0; i < initCorp.subsidiary_list.size(); i++)
     {
-        if(person.unit == initCorp.subsidiary[i].name)
+        if(person.unit == initCorp.subsidiary_list[i].name)
         {
             if(is_director)
-                initCorp.subsidiary[i].director = person;
+                initCorp.subsidiary_list[i].director = person;
             else if(is_vice_director)
-                initCorp.subsidiary[i].deputy_director = person;  
+                initCorp.subsidiary_list[i].deputy_director = person;  
             else
             {
-                initCorp.subsidiary[i].employee.push_back(person);
+                initCorp.subsidiary_list[i].employee_list.push_back(person);
             }
             found = true;
         }
@@ -67,9 +66,9 @@ void sub_devision(Employee person)
         else if(is_vice_director)
             new_sub.deputy_director = person;
         else
-            new_sub.employee.push_back(person); 
+            new_sub.employee_list.push_back(person); 
 
-        initCorp.subsidiary.push_back(new_sub);
+        initCorp.subsidiary_list.push_back(new_sub);
     }
 }
 
@@ -79,20 +78,20 @@ void depart_devision(Employee person)
     bool flag = false;
     bool is_leader = (person.position == "Truong phong" || person.position == "truong phong");
     bool is_vice_leader = (person.position == "Pho phong" || person.position == "pho phong");
-    for(int i = 0; i < initCorp.subsidiary.size(); i++)
+    for(int i = 0; i < initCorp.subsidiary_list.size(); i++)
     {
-        if(person.parent_unit == initCorp.subsidiary[i].name)
+        if(person.parent_unit == initCorp.subsidiary_list[i].name)
         {
-            for(int j = 0; j < initCorp.subsidiary[i].department.size(); j++)
+            for(int j = 0; j < initCorp.subsidiary_list[i].department_list.size(); j++)
             {
-                if(initCorp.subsidiary[i].department[j].name == person.unit)
+                if(initCorp.subsidiary_list[i].department_list[j].name == person.unit)
                 {
                     if(is_leader)
-                        initCorp.subsidiary[i].department[j].leader = person;
+                        initCorp.subsidiary_list[i].department_list[j].leader = person;
                     else if(is_vice_leader)
-                        initCorp.subsidiary[i].department[j].vice_leader = person; 
+                        initCorp.subsidiary_list[i].department_list[j].vice_leader = person; 
                     else
-                        initCorp.subsidiary[i].department[j].employee.push_back(person);
+                        initCorp.subsidiary_list[i].department_list[j].employee_list.push_back(person);
                     found = true;
                     flag = true;
                     break;
@@ -108,8 +107,8 @@ void depart_devision(Employee person)
                 else if(is_vice_leader)
                     new_depart.vice_leader = person; 
                 else
-                    new_depart.employee.push_back(person);
-                initCorp.subsidiary[i].department.push_back(new_depart);
+                    new_depart.employee_list.push_back(person);
+                initCorp.subsidiary_list[i].department_list.push_back(new_depart);
                 flag = true;
                 break;
             }
@@ -119,7 +118,7 @@ void depart_devision(Employee person)
     {
         Subsidiary new_sub;
         new_sub.name = person.parent_unit;
-        initCorp.subsidiary.push_back(new_sub);
+        initCorp.subsidiary_list.push_back(new_sub);
         depart_devision(person);
     }
 }

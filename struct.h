@@ -37,7 +37,7 @@ struct Department
     string name;
     Employee leader;
     Employee vice_leader;
-    vector<Employee>employee;
+    vector<Employee>employee_list;
     
     Department()
     {
@@ -54,8 +54,8 @@ struct Subsidiary
     string name;
     Employee director;
     Employee deputy_director;
-    vector<Department>department;
-    vector<Employee>employee;
+    vector<Department>department_list;
+    vector<Employee>employee_list;
 
     Subsidiary()
     {
@@ -72,7 +72,7 @@ struct Corporation
     string name;
     Employee chairman;
     Employee vice_chairman;
-    vector<Subsidiary>subsidiary;
+    vector<Subsidiary>subsidiary_list;
 
     Corporation()
     {
