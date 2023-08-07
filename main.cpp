@@ -133,7 +133,7 @@ bool upload(vector<Employee>&manage_emp)
 
     if(!input.is_open())
     {
-        cout << "FILE ERROR. Can not access, please try again!\n";
+        cout << "FILE ERROR. Can not open txt file, please try again!\n";
         return false;
     }
 
@@ -216,8 +216,7 @@ int main()
     {
         // Menu-base
         //..........
-
     }
-    
+
     return 0;
 }
