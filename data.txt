@@ -2819,8 +2819,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 11/08/1996
 Ca Mau
-11O Cho Dua
-hai216
+No.11, O Cho Dua
+hai216.bk@gmail.com
 0339023618
 10/05/2020
 18/06/2023,07:52,17:20
@@ -2861,8 +2861,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 02/09/1998
 Son La
-47Giai Phong
-ly204
+No.47, Giai Phong
+ly204.bk@gmail.com
 0663358099
 04/10/2022
 30/04/2023,08:24,17:14
@@ -2903,8 +2903,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 05/10/1994
 Binh Duong
-56O Cho Dua
-hoai229
+No.56, O Cho Dua
+hoai229.bk@gmail.com
 0100540112
 05/11/2021
 30/04/2023,07:54,16:55
@@ -2945,8 +2945,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 23/09/1986
 Nghe An
-35Hang Non
-hoa281
+No.35, Hang Non
+hoa281.bk@gmail.com
 0937343875
 26/04/2021
 31/03/2023,07:52,16:48
@@ -2987,8 +2987,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 31/07/1992
 Thanh Hoa
-82 Hang Ma
-hai216
+No.82, Hang Ma
+hai216.bk@gmail.com
 0837585087
 14/08/2017
 18/07/2023,08:07,17:24
@@ -3029,8 +3029,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 07/04/1993
 Dien Bien
-60Hang Da
-toan229
+No.60, Hang Da
+toan229.bk@gmail.com
 0665299335
 13/10/2018
 21/05/2023,08:28,17:20
@@ -3071,8 +3071,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 23/08/1981
 Da Nang
-46 Le Thanh Nghi
-hung274
+No.46, Le Thanh Nghi
+hung274.bk@gmail.com
 0440682754
 08/11/2020
 21/05/2023,07:59,17:27
@@ -3113,8 +3113,8 @@ BKcorporation/BKmechan/Financial-Dept.
 Nhan vien
 29/01/1995
 Thanh Hoa
-15 Giai Phong
-nhung259
+No.15, Giai Phong
+nhung259.bk@gmail.com
 0489291188
 06/09/2018
 30/01/2023,07:58,17:00
