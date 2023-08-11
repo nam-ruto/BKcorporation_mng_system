@@ -23,16 +23,11 @@ void corp_devision(Employee person)
     bool is_vice_chairman = (person.position ==  "Pho chu tich" || person.position == "pho chu tich");
     
     if(is_chairman)
-    {
-        initCorp.name = person.unit;
-        initCorp.chairman = person;
-    }
+        initCorp.chairman_list.push_back(person);
     
     else if (is_vice_chairman)
-    {
-        initCorp.name = person.unit;
-        initCorp.vice_chairman = person;
-    }
+        initCorp.vice_chairman_list.push_back(person);
+
 }
 
 void sub_devision(Employee person)
@@ -46,9 +41,9 @@ void sub_devision(Employee person)
         if(person.unit == initCorp.subsidiary_list[i].name)
         {
             if(is_director)
-                initCorp.subsidiary_list[i].director = person;
+                initCorp.subsidiary_list[i].director_list.push_back(person);
             else if(is_vice_director)
-                initCorp.subsidiary_list[i].deputy_director = person;  
+                initCorp.subsidiary_list[i].deputy_director_list.push_back(person);  
             else
             {
                 initCorp.subsidiary_list[i].employee_list.push_back(person);
@@ -62,9 +57,9 @@ void sub_devision(Employee person)
         Subsidiary new_sub;
         new_sub.name = person.unit;
         if(is_director)
-            new_sub.director = person;
+            new_sub.director_list.push_back(person);
         else if(is_vice_director)
-            new_sub.deputy_director = person;
+            new_sub.deputy_director_list.push_back(person); 
         else
             new_sub.employee_list.push_back(person); 
 
@@ -87,9 +82,9 @@ void depart_devision(Employee person)
                 if(initCorp.subsidiary_list[i].department_list[j].name == person.unit)
                 {
                     if(is_leader)
-                        initCorp.subsidiary_list[i].department_list[j].leader = person;
+                        initCorp.subsidiary_list[i].department_list[j].leader_list.push_back(person);
                     else if(is_vice_leader)
-                        initCorp.subsidiary_list[i].department_list[j].vice_leader = person; 
+                        initCorp.subsidiary_list[i].department_list[j].vice_leader_list.push_back(person); 
                     else
                         initCorp.subsidiary_list[i].department_list[j].employee_list.push_back(person);
                     found = true;
@@ -103,9 +98,9 @@ void depart_devision(Employee person)
                 Department new_depart;
                 new_depart.name = person.unit;
                 if(is_leader)
-                    new_depart.leader = person;
+                    new_depart.leader_list.push_back(person);
                 else if(is_vice_leader)
-                    new_depart.vice_leader = person; 
+                    new_depart.vice_leader_list.push_back(person);
                 else
                     new_depart.employee_list.push_back(person);
                 initCorp.subsidiary_list[i].department_list.push_back(new_depart);
@@ -123,7 +118,7 @@ void depart_devision(Employee person)
     }
 }
 
-bool upload(vector<Employee>&manage_emp)
+bool upload()
 {
     string  id, fam_name, first_name, unit, position, dob, hometown, 
             address, email, phone_number, working_start_date;
@@ -174,7 +169,7 @@ bool upload(vector<Employee>&manage_emp)
             person.parent_unit = parent_unit;
 
             // Ném thằng này vào vecto manage_emp
-            manage_emp.push_back(person);
+            initCorp.manage.push_back(person);
 
             // Phân bổ thằng này vào vị trí Corp
             if(slash == 0)
@@ -208,14 +203,16 @@ bool upload(vector<Employee>&manage_emp)
 
 int main()
 {
-    // Khai báo vecto để lưu trữ toàn bộ nhân sự
-    vector<Employee>manage;
-
     // Tải thông tin từ file text lên, nếu không tải được thì dừng chương trình
-    if(upload(manage) == true)
+    if(upload() == true)
     {
         // Menu-base
         //..........
+        cout << initCorp.chairman_list[0].fam_name << " ";
+        cout << initCorp.chairman_list[0].first_name << endl;
+
+        cout << initCorp.manage[0].address;
+
     }
 
     return 0;

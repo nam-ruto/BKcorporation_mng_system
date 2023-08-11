@@ -35,53 +35,27 @@ struct Employee
 struct Department
 {
     string name;
-    Employee leader;
-    Employee vice_leader;
+    vector<Employee>leader_list;
+    vector<Employee>vice_leader_list;
     vector<Employee>employee_list;
-    
-    Department()
-    {
-        name = "Unappointed";
-        leader.fam_name = "";
-        leader.first_name = "Unappointed";
-        vice_leader.fam_name = "";
-        vice_leader.first_name = "Unappointed";
-    }
 };
 
 struct Subsidiary
 {
     string name;
-    Employee director;
-    Employee deputy_director;
+    vector<Employee>director_list;
+    vector<Employee>deputy_director_list;
     vector<Department>department_list;
     vector<Employee>employee_list;
-
-    Subsidiary()
-    {
-        name = "Unappointed";
-        director.fam_name = "";
-        director.first_name = "Unappointed";
-        deputy_director.fam_name = "";
-        deputy_director.first_name = "Unappointed";
-    }
 };
 
 struct Corporation
 {
-    string name;
-    Employee chairman;
-    Employee vice_chairman;
+    string name = "BKcorporation";
+    vector<Employee>manage;
+    vector<Employee>chairman_list;
+    vector<Employee>vice_chairman_list;
     vector<Subsidiary>subsidiary_list;
-
-    Corporation()
-    {
-        name = "Unappointed";
-        chairman.fam_name = "";
-        chairman.first_name = "Unappointed";
-        vice_chairman.fam_name = "";
-        vice_chairman.first_name = "Unappointed";
-    }
 };
 
 #endif
