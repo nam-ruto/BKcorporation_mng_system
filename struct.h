@@ -12,7 +12,10 @@ struct Employee
             start_of_work, parent_unit;
     vector<string>date_time;
 
-    Employee(){} 
+    Employee()
+    {
+        id = "null_id";
+    } 
     Employee(string id, string fam_name, string first_name, string unit,
              string position, string dob, string hometown, string address,
              string email, string phone_number, string start_of_work)
@@ -29,7 +32,6 @@ struct Employee
         this -> phone_number = phone_number;
         this -> start_of_work = start_of_work;   
     }
-
 };
 
 struct Department
@@ -57,5 +59,20 @@ struct Corporation
     vector<Employee>vice_chairman_list;
     vector<Subsidiary>subsidiary_list;
 };
+
+
+bool operator == (Employee& person1, Employee& person2) {
+    return(person1.id == person2.id && person1.fam_name == person2.fam_name && person1.first_name == person2.first_name
+           && person1.unit == person2.unit && person1.position == person2.position && person1.dob == person2.dob
+           && person1.hometown == person2.hometown && person1.address == person2.address
+           && person1.email == person1.email && person1.phone_number == person2.phone_number && person1.start_of_work == person2.start_of_work);
+}
+
+
+void displayE(Employee person) {
+    cout << person.id << endl << person.fam_name + " " + person.first_name << endl << person.unit << endl << person.position << endl << person.dob << endl << person.hometown << endl
+         << person.address << endl << person.email << endl << person.phone_number << endl << person.start_of_work << endl;
+}
+
 
 #endif
