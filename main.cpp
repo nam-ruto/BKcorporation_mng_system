@@ -215,6 +215,7 @@ bool upload()
 void display_corp_data()
 {
     int max_size;
+
     if(initCorp.chairman_list.size() == 0)
         {
             Employee new_emp;
@@ -225,6 +226,7 @@ void display_corp_data()
             Employee new_emp;
             initCorp.vice_chairman_list.push_back(new_emp);
         }
+    
     if(initCorp.chairman_list.size() >= initCorp.vice_chairman_list.size())
         max_size = initCorp.chairman_list.size();
     else
@@ -234,6 +236,8 @@ void display_corp_data()
     line(44);
     cout << "\t|" << left << setw(20) << "CHAIRMAN" << " | " << setw(20) << "VICE CHAIRMAN" << " |" << endl;
     line(44);
+
+    //Hiển thị thông tin chủ tịch và pct
     for(int i = 0; i < max_size; i++)
     {
         if(i == initCorp.chairman_list.size())
@@ -254,9 +258,12 @@ void display_corp_data()
         }
     }
     line(44);
+
     int n = initCorp.subsidiary_list.size();
+    // In số lượng công ty con
     cout << "\tOwns " << n << " subsidiary companies" << endl;
 
+    //Hiển thị thông tin CÔNG TY CON
     for(int i = 0; i < n; i++)
     {
         int no_dept = initCorp.subsidiary_list[i].department_list.size();
@@ -309,6 +316,8 @@ void display_corp_data()
         line(83);
         cout << "\t|" << left << setw(20) << "Department" << " | " << setw(20) << "Leader" << " | " << setw(20) << "Vice Leader" << " | " << setw(13)  << "No.employee"  << " | " << endl;
         line(83);
+
+        // In thông tin phòng ban
         for(int k = 0; k < initCorp.subsidiary_list[i].department_list.size(); k++)
         {
             int led = initCorp.subsidiary_list[i].department_list[k].leader_list.size();
@@ -333,6 +342,7 @@ void display_corp_data()
             else
                 max_size_2 = vice_led;
 
+            // In ra trưởng phòng và ptp
             for(int t = 0; t < max_size_2; t++)
             {
                 if(t == 0 && led != 0 && vice_led != 0)
@@ -376,10 +386,11 @@ void display_corp_data()
 //--------MODULE 3: TÌM KIẾM NHÂN VIÊN | L.M.HOANG----------//
 void readInfo(Employee person )
 {
+    string emp_unit = person.parent_unit + "/" + person.unit;
     cout << "\t| " << setw(15) <<left << "ID: "           << "| " << setw(24)<<person.id << "|" << endl;
     cout << "\t| " << setw(15) <<left << "First Name: "   << "| " << setw(24)<<person.fam_name << "|" << endl;
     cout << "\t| " << setw(15) <<left << "Name: "         << "| " << setw(24)<<person.first_name << "|" << endl;
-    cout << "\t| " << setw(15) <<left << "Unit: "         << "| " << setw(24)<<person.unit << "|" << endl;
+    cout << "\t| " << setw(15) <<left << "Unit: "         << "| " << setw(24)<<emp_unit << "|" << endl;
     cout << "\t| " << setw(15) <<left << "Position: "     << "| " << setw(24)<<person.position << "|" << endl;
     cout << "\t| " << setw(15) <<left << "Date of Birth: "<< "| " << setw(24)<<person.dob << "|" <<endl ;
     cout << "\t| " << setw(15) <<left << "Hometown: "     << "| " << setw(24)<<person.hometown << "|" <<endl;
@@ -408,20 +419,20 @@ vector<Employee> findInfo()
     }
     vector<Employee> count;
     bool isReal = false ;
-    for (const Employee & person: initCorp.manage)
+    for (int i = 0; i < initCorp.manage.size(); i++)
     {
-        if (find_first_name == person.first_name and find_fam_name == person.fam_name)
+        if (name == initCorp.manage[i].fam_name + " " + initCorp.manage[i].first_name)
         {  
             isReal = true ;
-            count.push_back(person);
+            count.push_back(initCorp.manage[i]);
         }
     }
     if (count.size()==1)
-        cout << "There are " << count.size() << " valid result";
+        cout << "There is " << count.size() << " valid result";
     else
         cout << "There are " << count.size() << " valid results";
     if(isReal == false)
-        cout <<"DATA NOT FOUND. PLEASE TRY AGAIN!";
+        cout <<"DATA NOT FOUND. PLEASE TRY AGAIN!\n";
     return count;   
 }
 
@@ -544,12 +555,12 @@ string calculateLeave(string t, string day)
 
 void displayModule4()
 {
-    cout << setw(10) << "date" << setw(15) << "|" << setw(20) << "arrive time" << setw(23) << "|" << setw(25) << "leave time" << "\n";
+    cout << setw(20) << "   DATE" << setw(15) << "|" << setw(20) << "ARRIVE TIME" << setw(23) << "|" << setw(25) << "LEAVE TIME" << "\n";
 }
 
 void displayModule4(string date, string status1, string status2)
 {
-    cout << setw(10) << date << setw(15) << "|" << setw(20) << status1 << setw(23) << "|" << setw(25) << status2 << "\n";
+    cout << setw(20) << date << setw(15) << "|" << setw(20) << status1 << setw(23) << "|" << setw(25) << status2 << "\n";
 }
 
 void module4(Employee e)
@@ -602,31 +613,36 @@ void displaySub(vector<Subsidiary>&manage_sub)
         {   
             isReal = true;
             
-            cout <<setw(20) <<left <<"Director: ";
+            cout << left << setw(20) <<"Director" << " : ";
             // if list empty, leave a blank
             if(sub.director_list.empty())
             {
-                cout <<" "<<endl;
+                cout <<"none"<<endl;
             }
             else
             {
                 for(const Employee person: sub.director_list)
                 {
-                    cout <<person.fam_name << " "<<person.first_name<<endl;
+                    string full_name = person.fam_name + " " + person.first_name;
+                    cout << full_name << " . ";
                 }
+                cout << endl;
             }
-            cout <<setw(20)<<left<<"Deputy Director: ";
+            cout << left << setw(20) <<"Deputy Director" << " : ";
             if(sub.deputy_director_list.empty())
             {
-                cout <<" "<<endl;
+                cout <<"none"<<endl;
             }
             else
             {
                 for(const Employee person: sub.deputy_director_list)
                 {
-                    cout << person.fam_name << " "<<person.first_name<<endl;
+                    string full_name = person.fam_name + " " + person.first_name;
+                    cout << full_name << " . ";
                 }
+                cout << endl;
             }
+            
 
             line(39);
             cout << "\t| " << left << setw(20) << "DEPARTMENT" << " | " << setw(15) << "No.employee" << "|" << endl;
@@ -639,8 +655,8 @@ void displaySub(vector<Subsidiary>&manage_sub)
             line(39);
 
             string option;
-            cout << "Do you want to see the department list?"<<endl;
-            cout << "Input (yes) to continue: " ;
+            cout << "Do you want to see the employee list?"<<endl;
+            cout << "Input (yes) to continue or any thing to end: " ;
             cin >> option;
             if(option == "yes" || option == "y" || option == "Yes")
             {   
@@ -657,23 +673,33 @@ void displaySub(vector<Subsidiary>&manage_sub)
                         isFound = true;
 
                         // Print leader's name
-
-                        cout <<setw(17)<<left<<"Leader: ";
-                        for(const Employee person: depart.leader_list)
+                        cout << left << setw(20) << "Leader" << " : ";
+                        if(depart.leader_list.empty())
+                            cout << "none" << endl;
+                        else
                         {
-                            cout <<person.fam_name << " "<<person.first_name<<" ";
+                            for(const Employee person: depart.leader_list)
+                            {
+                                string full_name = person.fam_name + " " + person.first_name;
+                                cout << full_name << " . " ;
+                            }
+                            cout << endl;
                         }
-                        cout<<endl;
 
                         // Print vice's leader name
-
-                        cout <<setw(17)<<left<<"Vice- eader: ";
-                        for(const Employee person: depart.vice_leader_list)
+                        cout << left  << setw(20) << "Vice-leader" << " : ";
+                        if(depart.vice_leader_list.empty())
+                            cout << "none" << endl;
+                        else
                         {
-                            cout <<person.fam_name << " "<<person.first_name<<" ";
+                            for(const Employee person: depart.vice_leader_list)
+                            {
+                                string full_name = person.fam_name + " " + person.first_name;
+                                cout << full_name << " . "<<endl;
+                            }
+                            cout <<endl;
                         }
-                        cout <<endl;
-
+                
                         // Print information of department's employee 
                         cout <<endl;
                         line(48);
@@ -693,7 +719,6 @@ void displaySub(vector<Subsidiary>&manage_sub)
             else
                 cout<<"End the function! ";
         }
-        
     }  
     if(isReal==false)
         cout <<"Please enter again. ";
@@ -836,6 +861,8 @@ void set_position(Employee employee, int option, string position, string subsidi
             depart_division(employee);
         }
     }
+
+    initCorp.manage.push_back(employee);
 }
 
 //Hàm đưa ra vị trí nhân viên 
@@ -1210,6 +1237,7 @@ void readInfoNoDateTime(Employee person)
     cout << setw(15) <<left << "Email: "        << "| "<<person.email <<endl;
     cout << setw(15) <<left << "Phone number:"  << "| "<<person.phone_number <<endl;
     cout << setw(15) <<left << "Start of work: "<< "| "<<person.start_of_work <<endl;
+
 }
 
 vector<int> find_employee(string name) {
@@ -1239,22 +1267,22 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
         slash = 2;
     if (slash == 0)
     {
-        for (order_corE; order_corE < initCorp.chairman_list.size(); order_corE++)
+        for (order_corE = 0; order_corE < initCorp.chairman_list.size(); order_corE++)
         {
             if (person == initCorp.chairman_list[order_corE])
             {
                 is_main_role = true;
-                break;
+                return;
             }
         }
         if (!is_main_role)
         {
-            for (order_corE; order_corE < initCorp.vice_chairman_list.size(); order_corE++)
+            for (order_corE = 0; order_corE < initCorp.vice_chairman_list.size(); order_corE++)
             {
                 if (person == initCorp.vice_chairman_list[order_corE])
                 {
                     is_part_role = true;
-                    break;
+                    return;
                 }
             }
         }
@@ -1266,7 +1294,7 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
         {
             if (unit == initCorp.subsidiary_list[order_sub].name)
             {
-                for (order_subE; order_subE < initCorp.subsidiary_list[order_sub].director_list.size(); order_subE++)
+                for (order_subE = 0; order_subE < initCorp.subsidiary_list[order_sub].director_list.size(); order_subE++)
                 {
                     if (person == initCorp.subsidiary_list[order_sub].director_list[order_subE])
                     {
@@ -1276,8 +1304,7 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
                 }
                 if (!is_main_role)
                 {
-                    for (order_subE;
-                         order_subE < initCorp.subsidiary_list[order_sub].deputy_director_list.size(); order_subE++)
+                    for (order_subE = 0; order_subE < initCorp.subsidiary_list[order_sub].deputy_director_list.size(); order_subE++)
                     {
                         if (person == initCorp.subsidiary_list[order_sub].deputy_director_list[order_subE])
                         {
@@ -1289,8 +1316,7 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
                 if (!is_main_role && !is_part_role)
                 {
                     // Tìm nhân viên trong công ty
-                    for (order_subE;
-                         order_subE < initCorp.subsidiary_list[order_sub].employee_list.size(); order_subE++)
+                    for (order_subE = 0; order_subE < initCorp.subsidiary_list[order_sub].employee_list.size(); order_subE++)
                     {
                         if (person == initCorp.subsidiary_list[order_sub].employee_list[order_subE])
                             break;
@@ -1302,16 +1328,16 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
     }
     else {
         // Tìm công ty
-        for (order_sub; order_sub < initCorp.subsidiary_list.size(); order_sub++)
+        for (order_sub = 0; order_sub < initCorp.subsidiary_list.size(); order_sub++)
         {
             if (parent_unit == initCorp.subsidiary_list[order_sub].name)
             {
                 // Tìm phòng ban
-                for (order_dep; order_dep < initCorp.subsidiary_list[order_sub].department_list.size(); order_dep++)
+                for (order_dep = 0; order_dep < initCorp.subsidiary_list[order_sub].department_list.size(); order_dep++)
                 {
                     if (unit == initCorp.subsidiary_list[order_sub].department_list[order_dep].name)
                     {
-                        for (order_depE; order_depE <
+                        for (order_depE = 0; order_depE <
                                          initCorp.subsidiary_list[order_sub].department_list[order_dep].leader_list.size(); order_depE++)
                         {
                             if (person == initCorp.subsidiary_list[order_sub].department_list[order_dep].leader_list[order_depE])
@@ -1321,7 +1347,7 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
                             }
                         }
                         if (!is_main_role)
-                            for (order_depE; order_depE < initCorp.subsidiary_list[order_sub].department_list[order_dep].vice_leader_list.size(); order_depE++)
+                            for (order_depE = 0; order_depE < initCorp.subsidiary_list[order_sub].department_list[order_dep].vice_leader_list.size(); order_depE++)
                             {
                                 if (person == initCorp.subsidiary_list[order_sub].department_list[order_dep].vice_leader_list[order_depE])
                                 {
@@ -1333,7 +1359,7 @@ void find_employee_order(Employee person, bool& is_main_role, bool& is_part_role
                         if (!is_main_role && !is_part_role)
                         {
                             // Tìm nhân viên trong phòng ban
-                            for (order_depE; order_depE < initCorp.subsidiary_list[order_sub].department_list[order_dep].employee_list.size(); order_depE++)
+                            for (order_depE = 0; order_depE < initCorp.subsidiary_list[order_sub].department_list[order_dep].employee_list.size(); order_depE++)
                             {
                                 if (person == initCorp.subsidiary_list[order_sub].department_list[order_dep].employee_list[order_depE])
                                     break;
@@ -1376,7 +1402,8 @@ void delete_employee (int tmp, int order_sub, int order_dep, int order_subE, int
     initCorp.manage.erase(initCorp.manage.begin() + tmp);
 }
 
-void add_employee_1 (Employee person) {
+void add_employee_1 (Employee person)
+{
     int slash = 0;
     string parent_unit = person.parent_unit;
     string unit = person.unit;
@@ -1387,18 +1414,104 @@ void add_employee_1 (Employee person) {
     else
         slash = 2;
 
-    if (slash == 0)
-        corp_division(person);
-        // Phân bổ thằng này vào vị trí Subsidiary
-    else if (slash == 1)
-        sub_division(person);
+    string position_input = person.position;
+    if(slash == 0)
+    {
+        bool is_chairman = ( position_input == "Chu tich" || position_input == "chu tich");
+        bool is_vice_chairman = (position_input ==  "Pho chu tich" || position_input == "pho chu tich");
+
+        if(is_chairman)
+        {
+            if(initCorp.chairman_list[0].id == "null_id")
+                initCorp.chairman_list[0] = person;
+            else
+                initCorp.chairman_list.push_back(person);
+        }
+            
+        else if (is_vice_chairman)
+            if(initCorp.vice_chairman_list[0].id == "null_id")
+                initCorp.vice_chairman_list[0] = person;
+            else
+                initCorp.vice_chairman_list.push_back(person);
+    }
+        
+    else if(slash == 1)
+    {
+        bool found = false;
+        bool is_director = (position_input == "Giam doc" || position_input == "giam doc");
+        bool is_vice_director = (position_input == "Pho giam doc" || position_input == "pho giam doc");
+
+        for(int i = 0; i < initCorp.subsidiary_list.size(); i++)
+        {
+            if(person.unit == initCorp.subsidiary_list[i].name)
+            {
+                if(is_director)
+                {
+                    if(initCorp.subsidiary_list[i].director_list[0].id == "null_id")
+                        initCorp.subsidiary_list[i].director_list[0] = person;
+                    else
+                        initCorp.subsidiary_list[i].director_list.push_back(person);
+                }
+                    
+                else if(is_vice_director)
+                {
+                    if(initCorp.subsidiary_list[i].deputy_director_list[0].id == "null_id")
+                        initCorp.subsidiary_list[i].deputy_director_list[0] = person;
+                    else
+                        initCorp.subsidiary_list[i].deputy_director_list.push_back(person);
+                }
+                    
+                else
+                {
+                    initCorp.subsidiary_list[i].employee_list.push_back(person);
+                }
+                found = true;
+            }
+        }
+    }
         // Phân bổ thằng này vào vị trí Department
-    else
-        depart_division(person);
+    else if(slash == 2)
+    {
+        bool found = false;
+        bool flag = false;
+        bool is_leader = (position_input == "Truong phong" || position_input == "truong phong");
+        bool is_vice_leader = (position_input == "Pho phong" || position_input == "pho phong");
+        for(int i = 0; i < initCorp.subsidiary_list.size(); i++)
+        {
+            if(person.parent_unit == initCorp.subsidiary_list[i].name)
+            {
+                for(int j = 0; j < initCorp.subsidiary_list[i].department_list.size(); j++)
+                {
+                    if(initCorp.subsidiary_list[i].department_list[j].name == person.unit)
+                    {
+                        if(is_leader)
+                        {
+                            if(initCorp.subsidiary_list[i].department_list[j].leader_list.size() == 0)
+                                initCorp.subsidiary_list[i].department_list[j].leader_list[0] = person;
+                            else
+                                initCorp.subsidiary_list[i].department_list[j].leader_list.push_back(person);
+                        }
+                            
+                        else if(is_vice_leader)
+                            if(initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0].id == "null_id")
+                                initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0] = person;
+                            else
+                                initCorp.subsidiary_list[i].department_list[j].vice_leader_list.push_back(person);
+                        else
+                            initCorp.subsidiary_list[i].department_list[j].employee_list.push_back(person);
+                        found = true;
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        }    
     initCorp.manage.push_back(person);
 }
+}
 
-int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int order_subE, int order_depE, int order_corE, bool is_main_role, bool is_part_role, int slash) {
+int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int order_subE, int order_depE, int order_corE, bool is_main_role, bool is_part_role, int slash)
+{
     bool flag = true;
     string old_info;
     string new_info;
@@ -1421,7 +1534,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].id = id;
             person->id = id;
             new_info = person->id;
-            return choice;
+            break;;
         }
         case 2: {
             string name;
@@ -1431,7 +1544,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].fam_name = name;
             person->fam_name = name;
             new_info = person->fam_name;
-            return choice;
+            break;;
         }
         case 3: {
             string name;
@@ -1441,7 +1554,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].first_name = name;
             person->first_name = name;
             new_info = person->first_name;
-            return choice;
+            break;;
         }
         case 4: {
             string unit,
@@ -1461,19 +1574,21 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
                 flag = true;
                 switch (chosen_unit) {
                     case '1':
-                        if (slash == 0)
-                            return choice;
-                        else if (slash == 1) {
+                        if (slash == 1) {
                             cout << "Subsidiary list: ";
                             for (Subsidiary sub: initCorp.subsidiary_list)
                                 cout << sub.name << " ";
-                        } else
+                        }
+                        else {
                             for (Subsidiary sub: initCorp.subsidiary_list)
                                 if (sub.name == new_employee.parent_unit) {
                                     cout << "Department list: ";
                                     for (Department dep: sub.department_list)
                                         cout << dep.name;
                                 }
+                        }
+                        if (slash == 0)
+                            return choice;
                         cout << endl << "Enter new unit: ";
                         getline(cin, unit);
                         new_employee.unit = unit;
@@ -1608,7 +1723,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             } while (!flag);
             add_employee_1(new_employee);
             tmp = initCorp.manage.size() - 1;
-            return choice;
+            break;;
         }
         case 5: {
             string position;
@@ -1686,7 +1801,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             // Thêm nhân viên
             add_employee_1(new_employee);
             tmp = initCorp.manage.size() - 1;
-            return choice;
+            break;;
         }
         case 6: {
             string dob;
@@ -1696,7 +1811,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].dob = dob;
             person->dob = dob;
             new_info = person->dob;
-            return choice;
+            break;;
         }
         case 7: {
             string hometown;
@@ -1706,7 +1821,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].hometown = hometown;
             person->hometown = hometown;
             new_info = person->hometown;
-            return choice;
+            break;;
         }
         case 8: {
             string address;
@@ -1716,7 +1831,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].address = address;
             person->address = address;
             new_info = person->address;
-            return choice;
+            break;;
         }
         case 9: {
             string email;
@@ -1726,7 +1841,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].email = email;
             person->email = email;
             new_info = person->email;
-            return choice;
+            break;;
         }
         case 10: {
             string phone_number;
@@ -1736,7 +1851,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].phone_number = phone_number;
             person->phone_number = phone_number;
             new_info = person->phone_number;
-            return choice;
+            break;;
         }
         case 11: {
             string start_of_work;
@@ -1746,19 +1861,44 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             initCorp.manage[tmp].start_of_work = start_of_work;
             person->start_of_work = start_of_work;
             new_info = person->start_of_work;
-            return choice;
+            break;;
         }
         case 12: {
             delete_employee(tmp, order_sub, order_dep, order_subE, order_depE, order_corE, is_main_role,
                             is_part_role, slash);
-            return choice;
+            break;;
         }
         case 13:
-            flag = false;
             return choice;
         default:
             cout << "Please choose correct number";
     }
+    ifstream input("data.txt");
+    ofstream output("data_temp.txt");
+    string line;
+    string lineChanged;
+    if (choice == 1)
+        lineChanged = old_info;
+    else
+        lineChanged = person->id;
+    bool found = false;
+        while (getline(input, line)) {
+            if (line == lineChanged)
+                found = true;
+            if(found) {
+                if (line == old_info) {
+                    output << new_info << endl; // Kết thúc sau khi tìm thấy dòng cần sửa
+                    getline(input, line);
+                }
+            }
+            output << line << endl;
+        }
+    input.close();
+    output.close();
+    remove("data.txt");
+    rename("data_temp.txt", "data.txt");
+    return choice;
+
 }
 
 void update_employee(string name) {
@@ -1822,6 +1962,8 @@ void update_employee(string name) {
         choice = menu_update(person, tmp, order_sub, order_dep, order_subE, order_depE, order_corE, is_main_role, is_part_role,
                     slash);
     } while (choice != 13);
+
+
 }
 
 
@@ -1839,7 +1981,7 @@ int main()
             menu_line(50);
             cout << left << setw(50) << "| 1 - Display Corporation's Data." << " |" << endl;
             cout << left << setw(50) << "| 2 - Search Employee's Data." << " |" << endl;
-            cout << left << setw(50) << "| 3 - Display data" << " |" << endl;
+            cout << left << setw(50) << "| 3 - Display employee working status." << " |" << endl;
             cout << left << setw(50) << "| 4 - Display Subsidiary's Data." << " |" << endl;
             cout << left << setw(50) << "| 5 - Add New Employee" << " |" << endl;
             cout << left << setw(50) << "| 6 - Update Data" << " |" << endl;
