@@ -33,6 +33,7 @@ void line(int n)
 
 //--------MODULE 1: ĐỌC DỮ LIỆU TỪ FILE TEXT | H.D.NAM----------//
 Corporation initCorp;
+bool check_null = false;
 void corp_division(Employee person)
 {
     bool is_chairman = ( person.position == "Chu tich" || person.position == "chu tich");
@@ -214,8 +215,8 @@ bool upload()
 //--------MODULE 2: HIỂN THỊ DỮ LIỆU | N.T.D.HANG------------//
 void display_corp_data()
 {
+    check_null = true;
     int max_size;
-
     if(initCorp.chairman_list.size() == 0)
         {
             Employee new_emp;
@@ -735,20 +736,29 @@ void set_position(Employee employee, int option, string position, string subsidi
     {
         bool is_chairman = ( position_input == "Chu tich" || position_input == "chu tich");
         bool is_vice_chairman = (position_input ==  "Pho chu tich" || position_input == "pho chu tich");
+        employee.unit = "BKcorporation";
 
         if(is_chairman)
         {
-            if(initCorp.chairman_list[0].id == "null_id")
+            employee.position = "Chu tich";
+            if(!check_null)
+                initCorp.chairman_list.push_back(employee);
+            else if(initCorp.chairman_list[0].id == "null_id")
                 initCorp.chairman_list[0] = employee;
             else
                 initCorp.chairman_list.push_back(employee);
         }
             
         else if (is_vice_chairman)
-            if(initCorp.vice_chairman_list[0].id == "null_id")
+        {
+            employee.position = "Pho chu tich";
+            if(!check_null)
+                initCorp.vice_chairman_list.push_back(employee);
+            else if(initCorp.vice_chairman_list[0].id == "null_id")
                 initCorp.vice_chairman_list[0] = employee;
             else
                 initCorp.vice_chairman_list.push_back(employee);
+        }
     }
 
     // Phân bổ thằng này vào vị trí Subsidiary
@@ -757,6 +767,8 @@ void set_position(Employee employee, int option, string position, string subsidi
         bool found = false;
         bool is_director = (position_input == "Giam doc" || position_input == "giam doc");
         bool is_vice_director = (position_input == "Pho giam doc" || position_input == "pho giam doc");
+        employee.parent_unit = subsidiary;
+        employee.unit = department;
 
         for(int i = 0; i < initCorp.subsidiary_list.size(); i++)
         {
@@ -764,7 +776,10 @@ void set_position(Employee employee, int option, string position, string subsidi
             {
                 if(is_director)
                 {
-                    if(initCorp.subsidiary_list[i].director_list[0].id == "null_id")
+                    employee.position = "Giam doc";
+                    if(!check_null)
+                        initCorp.subsidiary_list[i].director_list.push_back(employee);
+                    else if(initCorp.subsidiary_list[i].director_list[0].id == "null_id")
                         initCorp.subsidiary_list[i].director_list[0] = employee;
                     else
                         initCorp.subsidiary_list[i].director_list.push_back(employee);
@@ -772,7 +787,10 @@ void set_position(Employee employee, int option, string position, string subsidi
                     
                 else if(is_vice_director)
                 {
-                    if(initCorp.subsidiary_list[i].deputy_director_list[0].id == "null_id")
+                    employee.position = "Pho giam doc";
+                    if(!check_null)
+                        initCorp.subsidiary_list[i].deputy_director_list.push_back(employee);
+                    else if(initCorp.subsidiary_list[i].deputy_director_list[0].id == "null_id")
                         initCorp.subsidiary_list[i].deputy_director_list[0] = employee;
                     else
                         initCorp.subsidiary_list[i].deputy_director_list.push_back(employee);
@@ -808,6 +826,9 @@ void set_position(Employee employee, int option, string position, string subsidi
         bool flag = false;
         bool is_leader = (position_input == "Truong phong" || position_input == "truong phong");
         bool is_vice_leader = (position_input == "Pho phong" || position_input == "pho phong");
+        employee.parent_unit = subsidiary;
+        employee.unit = department;
+
         for(int i = 0; i < initCorp.subsidiary_list.size(); i++)
         {
             if(subsidiary == initCorp.subsidiary_list[i].name)
@@ -818,19 +839,29 @@ void set_position(Employee employee, int option, string position, string subsidi
                     {
                         if(is_leader)
                         {
-                            if(initCorp.subsidiary_list[i].department_list[j].leader_list.size() == 0)
+                            employee.position = "Truong phong";
+                            if(!check_null)
+                                initCorp.subsidiary_list[i].department_list[j].leader_list.push_back(employee);
+                            else if(initCorp.subsidiary_list[i].department_list[j].leader_list.size() == 0)
                                 initCorp.subsidiary_list[i].department_list[j].leader_list[0] = employee;
                             else
                                 initCorp.subsidiary_list[i].department_list[j].leader_list.push_back(employee);
                         }
-                            
                         else if(is_vice_leader)
-                            if(initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0].id == "null_id")
+                        {
+                            employee.position = "Pho phong";
+                            if(!check_null)
+                                initCorp.subsidiary_list[i].department_list[j].employee_list.push_back(employee);
+                            else if(initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0].id == "null_id")
                                 initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0] = employee;
                             else
                                 initCorp.subsidiary_list[i].department_list[j].vice_leader_list.push_back(employee);
+                        }
                         else
+                        {
+                            employee.position = "Nhan vien";
                             initCorp.subsidiary_list[i].department_list[j].employee_list.push_back(employee);
+                        }
                         found = true;
                         flag = true;
                         break;
@@ -1093,11 +1124,11 @@ void save_demodata(Employee employee, string sub, string dept, string position, 
         data << employee.first_name << endl;
 
         if (option == 1)
-            data << "Bkcorporation" << endl;
+            data << "BKcorporation" << endl;
         else if (option == 2)
-            data << "Bkcorporation/" + sub << endl;
+            data << "BKcorporation/" + sub << endl;
         else if (option == 3)
-            data << "Bkcorporation/" + sub + "/" + dept << endl;
+            data << "BKcorporation/" + sub + "/" + dept << endl;
 
         data << position << endl;
         data << employee.dob << endl;
@@ -1379,7 +1410,7 @@ void delete_employee (int tmp, int order_sub, int order_dep, int order_subE, int
         if (is_main_role)
             initCorp.chairman_list.erase(initCorp.chairman_list.begin() + order_corE);
         else
-            initCorp.vice_chairman_list.erase(initCorp.chairman_list.begin() + order_corE);
+            initCorp.vice_chairman_list.erase(initCorp.vice_chairman_list.begin() + order_corE);
     }
     else if (slash == 1)
     {
@@ -1422,17 +1453,24 @@ void add_employee_1 (Employee person)
 
         if(is_chairman)
         {
-            if(initCorp.chairman_list[0].id == "null_id")
+            if(!check_null)
+                initCorp.chairman_list.push_back(person);
+            else if(initCorp.chairman_list[0].id == "null_id")
                 initCorp.chairman_list[0] = person;
             else
                 initCorp.chairman_list.push_back(person);
         }
             
         else if (is_vice_chairman)
-            if(initCorp.vice_chairman_list[0].id == "null_id")
+        {
+            if(!check_null)
+                initCorp.vice_chairman_list.push_back(person);
+            else if(initCorp.vice_chairman_list[0].id == "null_id")
                 initCorp.vice_chairman_list[0] = person;
             else
                 initCorp.vice_chairman_list.push_back(person);
+        }
+            
     }
         
     else if(slash == 1)
@@ -1447,7 +1485,9 @@ void add_employee_1 (Employee person)
             {
                 if(is_director)
                 {
-                    if(initCorp.subsidiary_list[i].director_list[0].id == "null_id")
+                    if(!check_null)
+                        initCorp.subsidiary_list[i].director_list.push_back(person);
+                    else if(initCorp.subsidiary_list[i].director_list[0].id == "null_id")
                         initCorp.subsidiary_list[i].director_list[0] = person;
                     else
                         initCorp.subsidiary_list[i].director_list.push_back(person);
@@ -1455,7 +1495,9 @@ void add_employee_1 (Employee person)
                     
                 else if(is_vice_director)
                 {
-                    if(initCorp.subsidiary_list[i].deputy_director_list[0].id == "null_id")
+                    if(!check_null)
+                        initCorp.subsidiary_list[i].deputy_director_list.push_back(person);
+                    else if(initCorp.subsidiary_list[i].deputy_director_list[0].id == "null_id")
                         initCorp.subsidiary_list[i].deputy_director_list[0] = person;
                     else
                         initCorp.subsidiary_list[i].deputy_director_list.push_back(person);
@@ -1486,17 +1528,23 @@ void add_employee_1 (Employee person)
                     {
                         if(is_leader)
                         {
-                            if(initCorp.subsidiary_list[i].department_list[j].leader_list.size() == 0)
+                            if(!check_null)
+                                initCorp.subsidiary_list[i].department_list[j].leader_list.push_back(person);
+                            else if(initCorp.subsidiary_list[i].department_list[j].leader_list.size() == 0)
                                 initCorp.subsidiary_list[i].department_list[j].leader_list[0] = person;
                             else
                                 initCorp.subsidiary_list[i].department_list[j].leader_list.push_back(person);
                         }
                             
                         else if(is_vice_leader)
+                        {
+                            if(!check_null)
+                                initCorp.subsidiary_list[i].department_list[j].vice_leader_list.push_back(person);
                             if(initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0].id == "null_id")
                                 initCorp.subsidiary_list[i].department_list[j].vice_leader_list[0] = person;
                             else
                                 initCorp.subsidiary_list[i].department_list[j].vice_leader_list.push_back(person);
+                        }
                         else
                             initCorp.subsidiary_list[i].department_list[j].employee_list.push_back(person);
                         found = true;
@@ -1506,8 +1554,8 @@ void add_employee_1 (Employee person)
                 }
             }
         }    
+    }
     initCorp.manage.push_back(person);
-}
 }
 
 int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int order_subE, int order_depE, int order_corE, bool is_main_role, bool is_part_role, int slash)
@@ -1516,6 +1564,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
     string old_info;
     string new_info;
     flag = true;
+    Employee new_employee;
     //In menu
     int choice;
     cout << endl << "Choose type of information you want to update: " << endl;
@@ -1561,7 +1610,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
                     position,
                     parent_unit;
             char chosen_unit;
-            Employee new_employee = *person;
+            new_employee = *person;
             // Xóa thông tin cũ
             delete_employee(tmp, order_sub, order_dep, order_subE, order_depE, order_corE, is_main_role,
                             is_part_role,
@@ -1603,7 +1652,8 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
                             switch (choice_level) {
                                 case '1':
                                     unit = "BKcorporation";
-                                    person->unit = unit;
+                                    new_employee.unit = unit;
+                                    new_employee.parent_unit = "";
                                     break;
                                 case '2':
                                     cout << "Subsidiary list: \n";
@@ -1791,7 +1841,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
                 } while (!flag);
             }
 
-            Employee new_employee = *person;
+            new_employee = *person;
             // Xóa nhân viên
             delete_employee(tmp, order_sub, order_dep, order_subE, order_depE, order_corE, is_main_role,
                             is_part_role,
@@ -1801,7 +1851,7 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
             // Thêm nhân viên
             add_employee_1(new_employee);
             tmp = initCorp.manage.size() - 1;
-            break;;
+            break;
         }
         case 6: {
             string dob;
@@ -1877,22 +1927,60 @@ int menu_update(Employee *person, int& tmp, int order_sub, int order_dep, int or
     ofstream output("data_temp.txt");
     string line;
     string lineChanged;
-    if (choice == 1)
-        lineChanged = old_info;
-    else
-        lineChanged = person->id;
     bool found = false;
-        while (getline(input, line)) {
+    if (choice != 4 && choice != 5)
+    {
+        if (choice == 1)
+            lineChanged = old_info;
+        else
+            lineChanged = person->id;
+        while (getline(input, line))
+        {
             if (line == lineChanged)
                 found = true;
-            if(found) {
-                if (line == old_info) {
-                    output << new_info << endl; // Kết thúc sau khi tìm thấy dòng cần sửa
+            if (found)
+            {
+                if (line == old_info)
+                {
+                    output << new_info << endl;
                     getline(input, line);
                 }
             }
             output << line << endl;
         }
+    }
+    else
+    {
+        lineChanged = new_employee.id;
+        while (getline(input, line))
+        {
+            if (line == lineChanged)
+                found = true;
+            if (found)
+            {
+                found = false;
+                output << line << endl;
+                getline(input, line);
+                output << line << endl;
+                getline(input, line);
+                output << line << endl;
+                if (new_employee.unit == "BKcorporation") {
+                    output << "BKcorporation" << endl;
+                }
+                else if (new_employee.parent_unit == "BKcorporation") {
+                    output << "BKcorporation/" << new_employee.unit << endl;
+                }
+                else
+                    output << "BKcorporation/" << new_employee.parent_unit << "/" << new_employee.unit << endl;
+                getline(input, line);
+                getline(input, line);
+                output << new_employee.position << endl;
+                getline(input, line);
+                getline(input, line);
+            }
+            output << line << endl;
+        }
+    }
     input.close();
     output.close();
     remove("data.txt");
@@ -1967,6 +2055,7 @@ void update_employee(string name) {
 }
 
 
+// Main Function
 int main()
 {
     // Tải thông tin từ file text lên, nếu không tải được thì dừng chương trình
@@ -2020,12 +2109,15 @@ int main()
                 displaySub(initCorp.subsidiary_list);
             }
 
-            else if(option == "5"){display_menu();}
+            else if(option == "5")
+            {
+                display_menu();
+            }
 
             else if(option == "6")
             {
                 string name;
-                cout << "Iput employee name: ";
+                cout << "Input employee name: ";
                 cin.ignore();
                 getline(cin, name);
                 update_employee(name);
@@ -2036,7 +2128,7 @@ int main()
                 cout << "ENDING PROGRAM!" << endl;
                 break;
             }
-            else cout << "ERROR INPUT - PLEASE TRY AGAIN";
+            else cout << "ERROR INPUT - PLEASE TRY AGAIN\n";
             cout << "Press any key to continue......\n";
 
             cin.ignore();
